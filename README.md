@@ -29,3 +29,28 @@ The middleware that uses the apollo-server-express package url: https://www.apol
 ## Express-Session
 
 ## Bcrypt
+
+# PSQL Steps
+
+1. create database `create database authexample`
+2. log into psql `psql -U postgres`
+3. list all databases `\l`
+4. delete database `drop database authexample;`
+5. connect to database `psql authexample postgres`
+6. create the users table `create table users ( id serial PRIMARY KEY, email VARCHAR (500), password VARCHAR(600) );`
+
+# Apollo Server
+
+## to run the server `npm run start`
+
+7. Test the Mutation by running the server and then running the command
+   `mutation { register(email:"email@gmail.com", password:"password") }`
+8. Test the Mutation that will return a registered user
+   `mutation { login(email:"email@123.com", password:"password") { id email } }`
+   the id and email will be returned.
+9. Verify Cookies are created - change apollo server settings `"request.credentials": "include"`
+10. Inside the application tab under cookies on google chrome for example to verify the cookie has been created.
+11. Test to confirm that you can verify the identity of the user by running the me query, it should provide the user if a cookie has been created for the logged in user.
+    `query { me { id email } }`
+12. The register, login and verify login session flow
+    `mutation { register(email: "email2@gmail.com", password: "password") mutation { login (email: "email2@gamil.com", password: "password"){id email} query { me { id email } }` This will register a new user, log them in, and test to make sure that a cookie has been created for the new user.

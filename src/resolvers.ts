@@ -5,9 +5,11 @@ import { User } from "./entity/User";
 export const resolvers: IResolvers = {
   Query: {
     me: (_, __, { req }) => {
-      // the me query should provide us with the current cookie
-      console.log(req.session);
-      return null;
+      // the me query should provide us with the current user based on the userId value stored inside the cookie,
+      if (!req.session.userId) {
+        return null;
+      }
+      return User.findOne(req.session.userId);
     }
   },
   Mutation: {
