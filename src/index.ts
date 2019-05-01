@@ -1,9 +1,10 @@
-import "reflect-metadata";
-// import { createConnection } from "typeorm";
+import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-express";
+import * as express from "express";
+import * as session from "express-session";
+
 import { typeDefs } from "./typeDefs";
 import { resolvers } from "./resolvers";
-import * as express from "express";
 // import { User } from "./entity/User";
 
 // createConnection()
@@ -24,16 +25,32 @@ import * as express from "express";
 //   })
 //   .catch(error => console.log(error));
 
-const server = new ApolloServer({
-  // These will be defined for both new or existing servers
-  typeDefs,
-  resolvers
-});
+const startServer = async () => {
+  const server = new ApolloServer({
+    // These will be defined for both new or existing servers
+    typeDefs,
+    resolvers,
+    // with the session created we have access to cookies
+    context: ({ req }) => ({ req })
+  });
+  // create the database connection so that we can use the resolvers functions.
+  await createConnection();
 
-const app = express();
+  const app = express();
 
-server.applyMiddleware({ app }); // app is from an existing express app
+  app.use(
+    session({
+      secret: "12398chsduio#DSFSEiojhewh9083",
+      resave: false, //resaves the session even if it doesnt change
+      saveUninitialized: false // assign a session when data has been added
+    })
+  );
 
-app.listen({ port: 4000 }, () =>
-  console.log(`server ready http://localhost:4000${server.graphqlPath}`)
-);
+  server.applyMiddleware({ app }); // app is from an existing express app
+
+  app.listen({ port: 4000 }, () =>
+    console.log(`server ready http://localhost:4000${server.graphqlPath}`)
+  );
+};
+
+startServer();
