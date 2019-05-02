@@ -1,0 +1,38 @@
+.todoForm {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  background: var(--brandColor);
+  padding: 30px;
+  color: var(--mainWhite);
+  border-radius: 5px 20px 5px;
+  margin: 20px auto;
+}
+
+.todoLabel {
+  font-size: 1.2rem;
+  padding: 5px 0;
+}
+
+.todoError {
+  text-align: center;
+  color: red;
+}
+
+.todoInput {
+  margin: 0 0 10px 0;
+  border: 3px solid var(--altBrandColor);
+  height: 25px;
+  font-size: 1.3rem;
+  padding: 2px;
+}
+
+.todoButton {
+  font-size: 1.3rem;
+}
+
+@media only screen and (max-width: 500px) {
+  .todoForm {
+    width: 80%;
+  }
+}

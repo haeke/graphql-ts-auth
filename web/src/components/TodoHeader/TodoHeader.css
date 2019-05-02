@@ -1,0 +1,19 @@
+.headerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20vh;
+  background: var(--brandColor);
+}
+
+.headerText {
+  font-size: 3.5rem;
+  color: var(--mainWhite);
+}
+
+@media only screen and (max-width: 500px) {
+  .headerText {
+    font-size: 2.3rem;
+    text-align: center;
+  }
+}
