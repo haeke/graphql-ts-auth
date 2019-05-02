@@ -45,8 +45,14 @@ const startServer = async () => {
       saveUninitialized: false // assign a session when data has been added
     })
   );
-
-  server.applyMiddleware({ app }); // app is from an existing express app
+  // enable cors so that the client can talk to the server and pass the cookies
+  server.applyMiddleware({
+    app,
+    cors: {
+      credentials: true,
+      origin: "http://localhost:3000"
+    }
+  }); // app is from an existing express app
 
   app.listen({ port: 4000 }, () =>
     console.log(`server ready http://localhost:4000${server.graphqlPath}`)
